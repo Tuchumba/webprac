@@ -21,11 +21,11 @@ public class User implements CommonEntity<Long> {
     @NonNull
     private String username;
 
-    @Column(name = "phone")
-    @NonNull
-    private String phone;
-
     @Column(nullable = false, name = "email")
     @NonNull
     private String email;
+
+    @Column(name = "phone")
+    @NonNull
+    private String phone;
 }
