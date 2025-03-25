@@ -11,12 +11,12 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Rent implements CommonEntity<Long> {
+public class Rent implements CommonEntity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "rent_id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "copy_id")
@@ -38,7 +38,7 @@ public class Rent implements CommonEntity<Long> {
     @NonNull
     private Timestamp date_of_receipt;
 
-    @Column(name = "actual_date_of_receipt", nullable = true)
+    @Column(name = "actual_date_of_receipt")
     private Timestamp actual_date_of_receipt;
 
     @Column(nullable = false, name = "transfer_amount")

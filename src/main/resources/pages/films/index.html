@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+
+    <meta charset="UTF-8">
+    <title>Фильмы</title>
+</head>
+<body>
+<!-- Navigation Panel -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Фильмы</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="/clients">Клиенты</a>
+                <!-- make info pages -->
+                <a class="nav-link" href="/records">История транзакций</a>
+                <a class="nav-link" href="#">Информация</a>
+                <a class="nav-link" href="#">Контакты</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Search form -->
+    <h1>Поиск фильма</h1>
+    <form action="#" th:action="@{/films/filtered}" th:object="${filter}" method="post">
+        <p>Название: <input id="filmTitle" type="text" th:field="*{title}"/></p>
+        <p>Компания: <input id="filmCompany" type="text" th:field="*{company}"/></p>
+        <p>Режиссер: <input id="filmDirector" type="text" th:field="*{director}"/></p>
+        <p>Год выпуска: <input id="filmYear" type="text" th:field="*{yearOfRelease}"/></p>
+        <p><input id="buttonSubmit" type="submit" value="Найти"/></p>
+    </form>
+<!-- get all films -->
+<div class="list-group">
+    <div th:each="film : ${films}">
+        <!--<a th:href="@{/films/{id}(id=${film.getId()})}" th:text="${film.getTitle()}">film</a>-->
+        <a id="filmId" th:href="@{/films/{id}(id=${film.getId()})}" class="list-group-item list-group-item-action" th:text="${film.getTitle()}">film</a>
+    </div>
+</div>
+<!-- button for new film -->
+<form action="/films/new">
+    <button id="createButton" type="submit" class="btn btn-outline-success">Создать</button>
+</form>
+</body>
+</html>

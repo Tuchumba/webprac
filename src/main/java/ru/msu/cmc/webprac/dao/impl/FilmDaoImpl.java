@@ -14,7 +14,7 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 
 @Repository
-public class FilmDaoImpl extends CommonDaoImpl<Film, Long> implements FilmDao {
+public class FilmDaoImpl extends CommonDaoImpl<Film, Integer> implements FilmDao {
 
     public FilmDaoImpl() {
         super(Film.class);
@@ -27,9 +27,9 @@ public class FilmDaoImpl extends CommonDaoImpl<Film, Long> implements FilmDao {
         }
 
         try (Session session = sessionFactory.openSession()) {
-            Query<Film> query = session.createQuery("FROM films WHERE title LIKE :filmTitle", Film.class)
+            Query<Film> query = session.createQuery("FROM Film WHERE title LIKE :filmTitle", Film.class)
                     .setParameter("filmTitle", likeTemplate(filmTitle));
-            return query.getResultList().size() == 0 ? null : query.getResultList();
+            return query.getResultList().isEmpty() ? null : query.getResultList();
         }
     }
 
@@ -44,10 +44,10 @@ public class FilmDaoImpl extends CommonDaoImpl<Film, Long> implements FilmDao {
                 to = Long.MAX_VALUE;
             }
 
-            Query<Film> query = session.createQuery("FROM films WHERE release_year BETWEEN :from AND :to", Film.class)
+            Query<Film> query = session.createQuery("FROM Film WHERE year_of_release BETWEEN :from AND :to", Film.class)
                     .setParameter("from", from)
                     .setParameter("to", to);
-            return query.getResultList().size() == 0 ? null : query.getResultList();
+            return query.getResultList().isEmpty() ? null : query.getResultList();
         }
     }
 
@@ -58,9 +58,9 @@ public class FilmDaoImpl extends CommonDaoImpl<Film, Long> implements FilmDao {
         }
 
         try (Session session = sessionFactory.openSession()) {
-            Query<Film> query = session.createQuery("FROM films WHERE genre LIKE :queryGenre", Film.class)
+            Query<Film> query = session.createQuery("FROM Film WHERE genre LIKE :queryGenre", Film.class)
                     .setParameter("queryGenre", likeTemplate(genre));
-            return query.getResultList().size() == 0 ? null : query.getResultList();
+            return query.getResultList().isEmpty() ? null : query.getResultList();
         }
     }
 
@@ -71,9 +71,9 @@ public class FilmDaoImpl extends CommonDaoImpl<Film, Long> implements FilmDao {
         }
 
         try (Session session = sessionFactory.openSession()) {
-            Query<Film> query = session.createQuery("FROM films WHERE company LIKE :queryCompany", Film.class)
+            Query<Film> query = session.createQuery("FROM Film WHERE company LIKE :queryCompany", Film.class)
                     .setParameter("queryCompany", likeTemplate(company));
-            return query.getResultList().size() == 0 ? null : query.getResultList();
+            return query.getResultList().isEmpty() ? null : query.getResultList();
         }
     }
 
@@ -84,9 +84,9 @@ public class FilmDaoImpl extends CommonDaoImpl<Film, Long> implements FilmDao {
         }
 
         try (Session session = sessionFactory.openSession()) {
-            Query<Film> query = session.createQuery("FROM films WHERE director LIKE :queryDirector", Film.class)
+            Query<Film> query = session.createQuery("FROM Film WHERE director LIKE :queryDirector", Film.class)
                     .setParameter("queryDirector", likeTemplate(director));
-            return query.getResultList().size() == 0 ? null : query.getResultList();
+            return query.getResultList().isEmpty() ? null : query.getResultList();
         }
     }
 
@@ -105,13 +105,13 @@ public class FilmDaoImpl extends CommonDaoImpl<Film, Long> implements FilmDao {
 
                 predicates.add(cb.like(root.get("title"), sqlTitle));
             }
-            if(company != null && company != "") {
+            if(company != null && !company.isEmpty()) {
                 predicates.add(cb.equal(root.get("company"), company));
             }
-            if(director != null && director != "") {
+            if(director != null && !director.isEmpty()) {
                 predicates.add(cb.equal(root.get("director"), director));
             }
-            if(year != null && year != "") {
+            if(year != null && !year.isEmpty()) {
                 predicates.add(cb.equal(root.get("year_of_release"), year));
             }
 

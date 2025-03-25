@@ -16,13 +16,13 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class CopyDaoImpl extends CommonDaoImpl<Copy, Long> implements CopyDao {
+public class CopyDaoImpl extends CommonDaoImpl<Copy, Integer> implements CopyDao {
     public CopyDaoImpl() {
         super(Copy.class);
     }
 
     @Override
-    public List<Copy> findCopy(Integer filmId, String type, String status, Integer price) {
+    public List<Copy> findCopy(Integer filmId, Copy.CopyType type, Copy.RentStatus status, Integer price) {
         try(Session session = this.getSessionFactory().openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<Copy> query = cb.createQuery(Copy.class);
@@ -31,12 +31,12 @@ public class CopyDaoImpl extends CommonDaoImpl<Copy, Long> implements CopyDao {
             // create path for dynamic filter query
             List<Predicate> predicates = new ArrayList<>();
             if (filmId != null) {
-                predicates.add(cb.equal(root.get("film"), filmId));
+                predicates.add(cb.equal(root.get("film_id"), filmId));
             }
-            if (type != null && type != "") {
+            if (type != null) {
                 predicates.add(cb.equal(root.get("type"), type));
             }
-            if(status != null && type != "") {
+            if(status != null) {
                 predicates.add(cb.equal(root.get("status"), status));
             }
             if (price != null) {
@@ -55,18 +55,18 @@ public class CopyDaoImpl extends CommonDaoImpl<Copy, Long> implements CopyDao {
             if (from == null && to == null) {
                 return (List<Copy>) getAll();
             } else if (to == null) {
-                Query<Copy> query = session.createQuery("FROM copies WHERE price >= :from", Copy.class)
+                Query<Copy> query = session.createQuery("FROM Copy WHERE price >= :from", Copy.class)
                         .setParameter("from", from);
-                return query.getResultList().size() == 0 ? null : query.getResultList();
+                return query.getResultList().isEmpty() ? null : query.getResultList();
             } else if (from == null) {
-                Query<Copy> query = session.createQuery("FROM films WHERE price <= :to", Copy.class)
+                Query<Copy> query = session.createQuery("FROM Copy WHERE price <= :to", Copy.class)
                         .setParameter("to", to);
-                return query.getResultList().size() == 0 ? null : query.getResultList();
+                return query.getResultList().isEmpty() ? null : query.getResultList();
             } else {
-                Query<Copy> query = session.createQuery("FROM films WHERE price BETWEEN :from AND :to", Copy.class)
+                Query<Copy> query = session.createQuery("FROM Copy WHERE price BETWEEN :from AND :to", Copy.class)
                         .setParameter("from", from)
                         .setParameter("to", to);
-                return query.getResultList().size() == 0 ? null : query.getResultList();
+                return query.getResultList().isEmpty() ? null : query.getResultList();
             }
         }
     }

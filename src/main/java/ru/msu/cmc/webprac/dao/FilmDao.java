@@ -4,7 +4,7 @@ import ru.msu.cmc.webprac.models.Film;
 
 import java.util.List;
 
-public interface FilmDao extends CommonDao<Film, Long> {
+public interface FilmDao extends CommonDao<Film, Integer> {
 
     List<Film> getAllFilmByTitle(String filmTitle);
     List<Film> getAllFilmByYear(Long from, Long to);

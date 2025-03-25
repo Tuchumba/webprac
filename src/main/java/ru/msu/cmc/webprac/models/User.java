@@ -10,22 +10,22 @@ import javax.persistence.*;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class User implements CommonEntity<Long> {
+public class User implements CommonEntity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "user_id")
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false, name = "username")
     @NonNull
     private String username;
 
-    @Column(name = "phone")
-    @NonNull
-    private String phone;
-
     @Column(nullable = false, name = "email")
     @NonNull
     private String email;
+
+    @Column(name = "phone")
+    @NonNull
+    private String phone;
 }
