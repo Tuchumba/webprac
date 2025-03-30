@@ -17,7 +17,7 @@ CREATE TABLE films (
 	company character varying NOT NULL,
 	director character varying NOT NULL,
 	year_of_release char(4) NOT NULL,
-	description text NOT NULL
+	description text
 );
 
 CREATE TABLE copies (

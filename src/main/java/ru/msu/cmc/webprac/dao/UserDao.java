@@ -4,7 +4,7 @@ import ru.msu.cmc.webprac.models.User;
 
 import java.util.List;
 
-public interface UserDao extends CommonDao<User, Long> {
+public interface UserDao extends CommonDao<User, Integer> {
 
     List<User> getAllUsersByName(String username);
     List<User> getAllUsersByPhone(String phone);

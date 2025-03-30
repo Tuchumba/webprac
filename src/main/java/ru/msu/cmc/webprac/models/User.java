@@ -10,12 +10,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class User implements CommonEntity<Long> {
+public class User implements CommonEntity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "user_id")
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false, name = "username")
     @NonNull

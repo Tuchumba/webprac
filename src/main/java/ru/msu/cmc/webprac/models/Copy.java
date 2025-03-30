@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Copy implements CommonEntity<Long> {
+public class Copy implements CommonEntity<Integer> {
     public enum CopyType {
         DVD,
         tape
@@ -24,7 +24,7 @@ public class Copy implements CommonEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "copy_id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "film_id")

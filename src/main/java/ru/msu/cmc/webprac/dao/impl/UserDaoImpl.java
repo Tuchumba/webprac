@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class UserDaoImpl extends CommonDaoImpl<User, Long> implements UserDao {
+public class UserDaoImpl extends CommonDaoImpl<User, Integer> implements UserDao {
 
     public UserDaoImpl() {
         super(User.class);
@@ -22,9 +22,9 @@ public class UserDaoImpl extends CommonDaoImpl<User, Long> implements UserDao {
         }
 
         try (Session session = sessionFactory.openSession()) {
-            Query<User> query = session.createQuery("FROM users WHERE username LIKE :queryName", User.class)
+            Query<User> query = session.createQuery("FROM User WHERE username LIKE :queryName", User.class)
                     .setParameter("queryName", likeTemplate(UserName));
-            return query.getResultList().size() == 0 ? null : query.getResultList();
+            return query.getResultList().isEmpty() ? null : query.getResultList();
         }
     }
 
@@ -32,7 +32,7 @@ public class UserDaoImpl extends CommonDaoImpl<User, Long> implements UserDao {
     public List<User> getAllUsersByEmail(String email) {
         String sqlAddress = "%" + email + "%";
         try(Session session = this.getSessionFactory().openSession()) {
-            Query<User> query = session.createQuery("FROM users WHERE email LIKE :email", User.class)
+            Query<User> query = session.createQuery("FROM User WHERE email LIKE :email", User.class)
                     .setParameter("email", sqlAddress);
             return query.getResultList().isEmpty() ? null : query.getResultList();
         }
@@ -41,7 +41,7 @@ public class UserDaoImpl extends CommonDaoImpl<User, Long> implements UserDao {
     @Override
     public List<User> getAllUsersByPhone(String phone) {
         try(Session session = this.getSessionFactory().openSession()) {
-            Query<User> query = session.createQuery("FROM users WHERE phone = :phone", User.class)
+            Query<User> query = session.createQuery("FROM User WHERE phone = :phone", User.class)
                     .setParameter("phone", phone);
             return query.getResultList().isEmpty() ? null : query.getResultList();
         }

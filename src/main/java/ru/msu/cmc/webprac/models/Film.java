@@ -10,12 +10,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Film implements CommonEntity<Long> {
+public class Film implements CommonEntity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "film_id")
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false, name = "title")
     @NonNull
@@ -37,7 +37,7 @@ public class Film implements CommonEntity<Long> {
     @NonNull
     private Long year_of_release;
 
-    @Column(nullable = false, name = "description")
+    @Column(name = "description")
     @NonNull
     private String description;
 }
