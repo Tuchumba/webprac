@@ -16,29 +16,27 @@ CREATE TABLE films (
 	genre character varying NOT NULL,
 	company character varying NOT NULL,
 	director character varying NOT NULL,
-	year_of_release char(4) NOT NULL,
+	year_of_release integer NOT NULL,
 	description text
 );
 
 CREATE TABLE copies (
 	copy_id serial PRIMARY KEY,
 	film_id integer,
-	type character varying NOT NULL,
+	type int NOT NULL,
 	status character varying NOT NULL,
-	price numeric NOT NULL DEFAULT 0,
-	
+    rent_price numeric NOT NULL DEFAULT 0,
+    purchase_price numeric NOT NULL DEFAULT 0,
+
 	FOREIGN KEY (film_id) REFERENCES films(film_id) ON DELETE CASCADE
 );
 
 CREATE TABLE rents (
-	rent_id serial PRIMARY KEY,
-	user_id integer NOT NULL,
-	copy_id integer NOT NULL,
-	date_of_transfer date NOT NULL,
-	date_of_receipt date NOT NULL,
-	actual_date_of_receipt date DEFAULT NULL,
-	transfer_amount numeric NOT NULL,
-
-	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-	FOREIGN KEY (copy_id) REFERENCES copies(copy_id) ON DELETE CASCADE
+    rental_id SERIAL PRIMARY KEY,
+    film_id SERIAL REFERENCES films(film_id),
+    client_id SERIAL REFERENCES users(user_id),
+    rent_or_purchase int NOT NULL,
+    start_time timestamp NOT NULL,
+    end_time timestamp,
+    price int NOT NULL
 );

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница фильма</title>
+    <link rel="stylesheet" type="text/css" th:href="@{main.css}">
+</head>
+<body>
+<div th:replace="common :: site-header"></div>
+<h4 id="idName" th:text="'#' + ${film.getId()} + ' ' + ${film.getTitle()}"></h4>
+<p th:text="'Жанр: ' + ${film.getGenre()}"></p>
+<p th:text="'Компания: ' + ${film.getCompany()}"></p>
+<p th:text="'Режиссёр: ' + ${film.getDirector()}"></p>
+<p th:text="'Год выхода: ' + ${film.getYear_of_release()}"></p>
+
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    <form method="get" action="/filmEdit">
+        <input type="hidden" name="filmId" th:value="${film.getId()}"/>
+        <button id="editButton" type="submit" class="btn btn-secondary">Редактировать</button>
+    </form>
+    <form method="post" action="/filmDelete">
+        <input type="hidden" name="filmId" th:value="${film.getId()}"/>
+        <button id="deleteButton" type="submit" class="btn btn-secondary">Удалить</button>
+    </form>
+</div>
+
+</body>
+</html>

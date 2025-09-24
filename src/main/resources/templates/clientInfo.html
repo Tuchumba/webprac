@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница клиента</title>
+    <link rel="stylesheet" type="text/css" th:href="@{main.css}">
+</head>
+<body>
+    <div th:replace="common :: site-header"></div>
+
+    <h4 id="idName" th:text="'#' + ${client.getId()} + ' ' + ${client.getUsername()}"></h4>
+    <p id="email" th:text="'E-mail: ' + ${client.getEmail()}"></p>
+    <p id="phone" th:text="${client.getPhone()} ? 'Телефон: ' + ${client.getPhone()} : 'Телефон: (нет)'"></p>
+
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <form method="get" action="/rentalAdd">
+            <input type="hidden" name="clientId" th:value="${client.getId()}"/>
+            <button id="addRentalButton" type="submit" class="btn btn-secondary">Новый прокат</button>
+        </form>
+        <form method="get" action="/clientEdit">
+            <input type="hidden" name="clientId" th:value="${client.getId()}"/>
+            <button id="editButton" type="submit" class="btn btn-secondary">Редактировать</button>
+        </form>
+        <form method="post" action="/clientDelete">
+            <input type="hidden" name="clientId" th:value="${client.getId()}"/>
+            <button id="deleteButton" type="submit" class="btn btn-secondary">Удалить</button>
+        </form>
+    </div>
+
+</body>
+</html>

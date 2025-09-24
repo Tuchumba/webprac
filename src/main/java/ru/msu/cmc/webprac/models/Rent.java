@@ -1,6 +1,7 @@
 package ru.msu.cmc.webprac.models;
 
 import lombok.*;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -13,9 +14,14 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class Rent implements CommonEntity<Integer> {
 
+    public enum RentMethod {
+        RENT,
+        PURCHASE
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, name = "rent_id")
+    @Column(nullable = false, name = "rental_id")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -25,23 +31,23 @@ public class Rent implements CommonEntity<Integer> {
     private Copy copy;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "client_id")
     @ToString.Exclude
     @NonNull
     private User user;
 
-    @Column(nullable = false, name = "date_of_transfer")
+    @Column(nullable = false, name = "rent_or_purchase")
     @NonNull
-    private Timestamp date_of_transfer;
+    private RentMethod rent_or_purchase;
 
-    @Column(nullable = false, name = "date_of_receipt")
+    @Column(nullable = false, name = "start_time")
     @NonNull
-    private Timestamp date_of_receipt;
+    private Timestamp start_time;
 
-    @Column(name = "actual_date_of_receipt")
-    private Timestamp actual_date_of_receipt;
+    @Column(name = "end_time")
+    private Timestamp end_time;
 
-    @Column(nullable = false, name = "transfer_amount")
+    @Column(nullable = false, name = "price")
     @NonNull
-    private Long transfer_amount;
+    private Long price;
 }

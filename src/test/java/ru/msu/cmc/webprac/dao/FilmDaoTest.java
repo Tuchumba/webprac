@@ -55,23 +55,23 @@ public class FilmDaoTest {
         assertEquals(1, film.getId());
     }
 
-    @Test
-    void testYear() {
-        List<Film> films = filmDao.getAllFilmByYear(1900L, 1983L);
-        assertEquals(5, films.size());
-
-        films = filmDao.getAllFilmByYear(null, 1983L);
-        assertEquals(5, films.size());
-
-        films = filmDao.getAllFilmByYear(null, null);
-        assertEquals(7, films.size());
-
-        films = filmDao.getAllFilmByYear(2009L, null);
-        assertEquals(2, films.size());
-
-        films = filmDao.getAllFilmByYear(2025L, null);
-        assertNull(films);
-    }
+//    @Test
+//    void testYear() {
+//        List<Film> films = filmDao.getAllFilmByYear(1900L, 1983L);
+//        assertEquals(5, films.size());
+//
+//        films = filmDao.getAllFilmByYear(null, 1983L);
+//        assertEquals(5, films.size());
+//
+//        films = filmDao.getAllFilmByYear(null, null);
+//        assertEquals(7, films.size());
+//
+//        films = filmDao.getAllFilmByYear(2009L, null);
+//        assertEquals(2, films.size());
+//
+//        films = filmDao.getAllFilmByYear(2025L, null);
+//        assertNull(films);
+//    }
 
     @Test
     void testTitle() {

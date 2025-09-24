@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Фильмы</title>
+    <link rel="stylesheet" type="text/css" th:href="@{main.css}">
+</head>
+<body>
+<div th:replace="common :: site-header"></div>
+
+<div class="indent">
+    <form method="get" action="/filmSearch">
+        <label for="filmTitle">Название:</label>
+        <input type="text" id="filmTitle" name="title"><br>
+        <label for="filmGenre">Жанр:</label>
+        <input type="text" id="filmGenre" name="genre"><br>
+        <label for="filmCompany">Компания:</label>
+        <input type="text" id="filmCompany" name="company"><br>
+        <label for="filmDirector">Режиссёр:</label>
+        <input type="text" id="filmDirector" name="director"><br>
+        <label for="filmReleaseYearFrom">Год выхода: от</label>
+        <input type="number" id="filmReleaseYearFrom" name="releaseYearFrom">
+        <label for="filmReleaseYearTo">до</label>
+        <input type="number" id="filmReleaseYearTo" name="releaseYearTo"><br>
+        <input type="submit" id="submitButton" value="Найти" class="btn">
+    </form>
+    <br>
+    <form method="get" action="/filmEdit">
+        <button id="addFilmButton" type="submit" class="btn btn-primary">Добавить фильм</button>
+    </form>
+    <br>
+    <table class="table table-bordered table-warning">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col" th:if="${!films.isEmpty()}">Название</th>
+            <th scope="col" th:if="${!films.isEmpty()}">Жанр</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="noFilmsMsg" th:if="${films.isEmpty()}">
+            <td colspan="6" th:if="${search}"> Таких фильмов нет.</td>
+            <td colspan="6" th:unless="${search}"> В базе пока нет ни одного фильма. <a href="/filmEdit">Добавить?</a></td>
+        </tr>
+        <tr th:each="film : ${films}">
+            <td><a th:href="'/filmInfo?filmId=' + ${film.getId()}">
+                <span th:text="${film.getTitle()}"> </span></a>
+            </td>
+            <td>
+                <span th:text="${film.getGenre()}"> </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

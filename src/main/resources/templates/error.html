@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Ошибка</title>
+    <link rel="stylesheet" type="text/css" th:href="@{main.css}">
+</head>
+<body>
+    <div th:replace="common :: site-header"></div>
+    <h2>Произошла ошибка.</h2>
+    <p th:text="${error_msg}"></p>
+    <div th:replace="common :: site-footer"></div>
+</body>
+</html>

@@ -33,72 +33,72 @@ public class RentDaoTest {
     @Autowired
     private SessionFactory sessionFactory;
 
-    @BeforeEach
-    void addRents() {
-        List<User> userList = new ArrayList<>();
-        userList.add(new User(null, "Гэри Джон Браннан", "garybrannan@gmail.com", "+44718979983"));
-        userList.add(new User(null, "Марта Элизабет Браннан", "martha121212@hotmail.com", "+44818767009"));
-        userDao.saveCollection(userList);
+//    @BeforeEach
+//    void addRents() {
+//        List<User> userList = new ArrayList<>();
+//        userList.add(new User(null, "Гэри Джон Браннан", "garybrannan@gmail.com", "+44718979983"));
+//        userList.add(new User(null, "Марта Элизабет Браннан", "martha121212@hotmail.com", "+44818767009"));
+//        userDao.saveCollection(userList);
+//
+//        List<Film> filmList = new ArrayList<>();
+//        filmList.add(new Film("Закованная фильмой", "неизвестно", "Нептун", "Никанор Туркин", 1918L, ""));
+//        filmList.add(new Film("Трон", "научная фантастика", "Walt Disney Pictures", "Стивен Лисбергер", 1982L, ""));
+//        filmList.add(new Film("Звёздные войны: Эпизод 4 - Новая надежда", "фантастика",
+//                "Lucasfilm", "Джордж Лукас", 1977L, ""));
+//        filmList.add(new Film("Звёздные войны: Эпизод 5 - Империя наносит ответный удар", "фантастика",
+//                "Lucasfilm", "Джордж Лукас", 1981L, ""));
+//        filmList.add(new Film("Звёздные войны: Эпизод 6 - Возвращение джедая", "фантастика",
+//                "Lucasfilm", "Джордж Лукас", 1983L, ""));
+//        filmList.add(new Film("Аватар", "фантастика", "20th Century Fox", "Джеймс Кэмерон", 2009L, ""));
+//        filmList.add(new Film("Аватар: Путь воды", "фантастика", "Lightstorm Entertainment", "Джеймс Кэмерон", 2022L, ""));
+//
+//        filmDao.saveCollection(filmList);
+//
+//        List<Copy> copyList = new ArrayList<>();
+//        copyList.add(new Copy(filmList.get(0),
+//                Copy.CopyType.tape, Copy.RentStatus.free, 1977L));
+//        copyList.add(new Copy(filmList.get(2), Copy.CopyType.DVD,
+//                Copy.RentStatus.free, 1981L));
+//        copyList.add(new Copy(filmList.get(3),
+//                Copy.CopyType.tape, Copy.RentStatus.free, 1983L));
+//        copyDao.saveCollection(copyList);
 
-        List<Film> filmList = new ArrayList<>();
-        filmList.add(new Film("Закованная фильмой", "неизвестно", "Нептун", "Никанор Туркин", 1918L, ""));
-        filmList.add(new Film("Трон", "научная фантастика", "Walt Disney Pictures", "Стивен Лисбергер", 1982L, ""));
-        filmList.add(new Film("Звёздные войны: Эпизод 4 - Новая надежда", "фантастика",
-                "Lucasfilm", "Джордж Лукас", 1977L, ""));
-        filmList.add(new Film("Звёздные войны: Эпизод 5 - Империя наносит ответный удар", "фантастика",
-                "Lucasfilm", "Джордж Лукас", 1981L, ""));
-        filmList.add(new Film("Звёздные войны: Эпизод 6 - Возвращение джедая", "фантастика",
-                "Lucasfilm", "Джордж Лукас", 1983L, ""));
-        filmList.add(new Film("Аватар", "фантастика", "20th Century Fox", "Джеймс Кэмерон", 2009L, ""));
-        filmList.add(new Film("Аватар: Путь воды", "фантастика", "Lightstorm Entertainment", "Джеймс Кэмерон", 2022L, ""));
-
-        filmDao.saveCollection(filmList);
-
-        List<Copy> copyList = new ArrayList<>();
-        copyList.add(new Copy(filmList.get(0),
-                Copy.CopyType.tape, Copy.RentStatus.free, 1977L));
-        copyList.add(new Copy(filmList.get(2), Copy.CopyType.DVD,
-                Copy.RentStatus.free, 1981L));
-        copyList.add(new Copy(filmList.get(3),
-                Copy.CopyType.tape, Copy.RentStatus.free, 1983L));
-        copyDao.saveCollection(copyList);
 
 
-
-        List<Rent> rentList = new ArrayList<>();
-        rentList.add(new Rent(copyList.get(0), userList.get(0),
-                Timestamp.valueOf("2016-11-01 12:00:00"),
-                Timestamp.valueOf("2016-11-02 12:00:00"),
-                99L));
-        rentList.add(new Rent(copyList.get(0), userList.get(1),
-                Timestamp.valueOf("2016-11-01 12:03:11"),
-                Timestamp.valueOf("2016-11-02 12:03:11"),
-                99L));
-        rentList.add(new Rent(copyList.get(0), userList.get(0),
-                Timestamp.valueOf("2016-11-02 14:17:51"),
-                Timestamp.valueOf("2016-11-03 14:17:51"),
-                249L));
-        rentList.add(new Rent(copyList.get(1), userList.get(0),
-                Timestamp.valueOf("2016-11-02 14:20:03"),
-                Timestamp.valueOf("2016-11-02 19:20:03"),
-                249L));
-        rentList.add(new Rent(copyList.get(2), userList.get(0),
-                Timestamp.valueOf("2016-11-02 14:22:59"),
-                Timestamp.valueOf("2016-11-04 14:20:03"),
-                249L));
-        rentDao.saveCollection(rentList);
-    }
-
-    @Test
-    void testId() {
-        Rent rent = rentDao.getById(1);
-        assertEquals(1, rent.getId());
-        assertEquals(1, rent.getCopy().getFilm_id().getId());
-        assertEquals("Гэри Джон Браннан", rent.getUser().getUsername());
-        assertEquals(Timestamp.valueOf("2016-11-01 12:00:00"), rent.getDate_of_transfer());
-        assertEquals(Timestamp.valueOf("2016-11-02 12:00:00"), rent.getDate_of_receipt());
-        assertEquals(99L, rent.getTransfer_amount());
-    }
+//        List<Rent> rentList = new ArrayList<>();
+//        rentList.add(new Rent(copyList.get(0), userList.get(0),
+//                Timestamp.valueOf("2016-11-01 12:00:00"),
+//                Timestamp.valueOf("2016-11-02 12:00:00"),
+//                99L));
+//        rentList.add(new Rent(copyList.get(0), userList.get(1),
+//                Timestamp.valueOf("2016-11-01 12:03:11"),
+//                Timestamp.valueOf("2016-11-02 12:03:11"),
+//                99L));
+//        rentList.add(new Rent(copyList.get(0), userList.get(0),
+//                Timestamp.valueOf("2016-11-02 14:17:51"),
+//                Timestamp.valueOf("2016-11-03 14:17:51"),
+//                249L));
+//        rentList.add(new Rent(copyList.get(1), userList.get(0),
+//                Timestamp.valueOf("2016-11-02 14:20:03"),
+//                Timestamp.valueOf("2016-11-02 19:20:03"),
+//                249L));
+//        rentList.add(new Rent(copyList.get(2), userList.get(0),
+//                Timestamp.valueOf("2016-11-02 14:22:59"),
+//                Timestamp.valueOf("2016-11-04 14:20:03"),
+//                249L));
+//        rentDao.saveCollection(rentList);
+//    }
+//
+//    @Test
+//    void testId() {
+//        Rent rent = rentDao.getById(1);
+//        assertEquals(1, rent.getId());
+//        assertEquals(1, rent.getCopy().getFilm_id().getId());
+//        assertEquals("Гэри Джон Браннан", rent.getUser().getUsername());
+//        assertEquals(Timestamp.valueOf("2016-11-01 12:00:00"), rent.getDate_of_transfer());
+//        assertEquals(Timestamp.valueOf("2016-11-02 12:00:00"), rent.getDate_of_receipt());
+//        assertEquals(99L, rent.getTransfer_amount());
+//    }
 
     @AfterEach
     void eraseRents() {

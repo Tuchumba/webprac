@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Клиенты</title>
+    <link rel="stylesheet" type="text/css" th:href="@{main.css}">
+</head>
+<body>
+<div th:replace="common :: site-header"></div>
+
+<div class="indent">
+    <form method="get" action="/clientSearch">
+        <label for="clientFullName">Имя:</label>
+        <input type="text" id="clientFullName" name="fullName"><br>
+        <input type="submit" id="submitButton" value="Найти" class="btn">
+    </form>
+    <br>
+    <form method="get" action="/clientEdit">
+        <button id="addClientButton" type="submit" class="btn btn-primary">Добавить клиента</button>
+    </form>
+    <br>
+
+    <table class="table table-bordered table-warning">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col" th:if="${!clients.isEmpty()}">Имя</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${clients.isEmpty()}">
+            <td colspan="6" th:if="${search}"> Таких клиентов нет. </td>
+            <td colspan="6" th:unless="${search}"> В базе пока нет ни одного клиента. <a href="/clientEdit">Добавить?</a></td>
+        </tr>
+        <tr th:each="client : ${clients}">
+            <td><a th:href="'/clientInfo?clientId=' + ${client.getId()}">
+                <span th:text="${client.getUsername()}"> </span></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

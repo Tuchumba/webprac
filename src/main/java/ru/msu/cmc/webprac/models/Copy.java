@@ -40,7 +40,11 @@ public class Copy implements CommonEntity<Integer> {
     @NonNull
     private RentStatus status;
 
-    @Column(nullable = false, name = "price")
+    @Column(nullable = false, name = "rent_price")
     @NonNull
-    private Long price;
+    private Long rent_price;
+
+    @Column(nullable = false, name = "purchase_price")
+    @NonNull
+    private Long purchase_price;
 }

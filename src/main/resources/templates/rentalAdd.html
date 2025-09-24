@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление проката</title>
+    <link rel="stylesheet" type="text/css" th:href="@{main.css}">
+</head>
+<body>
+<div th:replace="common :: site-header"></div>
+
+<div class="indent">
+    <form method="post" action="/rentalSave">
+        <input type="hidden" id="clientId" name="clientId" th:value="${client.getId()}">
+        <span th:text="'Добавление проката для клиента ' + ${client.getUsername()}"></span>
+        <br>
+        <label for="film">Фильм:</label>
+        <select id="film" name="filmId">
+            <option th:each="film : ${films}" th:value="${film.getId()}" th:text="${film.getTitle()}">
+            </option>
+        </select><br>
+        <label for="rent">Аренда</label>
+        <input type="radio" id="rent" name="rentalMethod" th:value="${RENT}">
+        <label for="purchase">Покупка</label>
+        <input type="radio" id="purchase" name="rentalMethod" th:value="${PURCHASE}"><br>
+
+        <label for="dvd">DVD</label>
+        <input type="radio" id="dvd" name="type" th:value="${DVD}">
+        <label for="tape">tape</label>
+        <input type="radio" id="tape" name="type" th:value="${tape}"><br>
+        <label for="startTime">Время начала:</label>
+        <input type="datetime-local" id="startTime" name="startTime"><br>
+        <input type="submit" id="submitButton" value="Сохранить">
+    </form>
+</div>
+
+<div th:replace="common :: site-footer"></div>
+</body>
+</html>

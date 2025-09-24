@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Прокаты</title>
+    <link rel="stylesheet" type="text/css" th:href="@{main.css}">
+</head>
+<body>
+<div th:replace="common :: site-header"></div>
+
+<div class="indent">
+    <form method="get" action="/rentalSearch">
+        <span>Время проката:</span><br>
+        <label for="rentalFrom">от</label>
+        <input type="datetime-local" id="rentalFrom" name="from">
+        <label for="rentalTo">до</label>
+        <input type="datetime-local" id="rentalTo" name="to"><br>
+        <input type="submit" id="submitButton" value="Найти" class="btn">
+    </form>
+    <br>
+    <table class="table table-bordered table-warning">
+        <thead class="thead-dark">
+        <tr th:if="${!rentals.isEmpty()}">
+            <th scope="col">Тип</th>
+            <th scope="col">Клиент</th>
+            <th scope="col">Фильм</th>
+            <th scope="col">Время начала</th>
+            <th scope="col">Время конца</th>
+            <th scope="col">Стоимость</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${rentals.isEmpty()}">
+            <td colspan="6" th:if="${search}"> Прокатов, начавшихся в указанный период, нет. </td>
+            <td colspan="6" th:unless="${search}"> В базе пока нет ни одного проката.
+                Добавьте прокат на странице клиента. </td>
+        </tr>
+        <tr class="entry" th:each="rental : ${rentals}">
+            <td>
+                <span th:if="${rental.getRent_or_purchase() == RENT}">Аренда</span>
+                <span th:if="${rental.getRent_or_purchase() == PURCHASE}">Покупка</span>
+            </td>
+            <td><span th:text="${rental.getUser().getUsername()}"></span></td>
+            <td><span th:text="${rental.getCopy().getFilm_id().getTitle()}"></span></td>
+            <td><span th:text="${rental.getStart_time()}"></span></td>
+            <td><span th:text="${rental.getEnd_time()} ?: '-'"></span></td>
+            <td><span th:text="${rental.getPrice()} + ' ₽'"></span></td>
+            <td><form method="post" action="/rentalDelete">
+                <input type="hidden" name="rentalId" th:value="${rental.getId()}"/>
+                <button id="deleteButton" type="submit">Удалить</button>
+            </form></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="common :: site-footer"></div>
+</body>
+</html>

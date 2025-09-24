@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование фильма</title>
+    <link rel="stylesheet" type="text/css" th:href="@{main.css}">
+</head>
+<body>
+<div th:replace="common :: site-header"></div>
+<form method="post" action="/filmSave">
+    <label for="filmTitle">Название:</label>
+    <input type="text" id="filmTitle" name="title" required th:value="${film.getTitle()}"><br>
+    <label for="filmGenre">Жанр:</label>
+    <input type="text" id="filmGenre" name="genre" required th:value="${film.getGenre()}"><br>
+    <label for="filmCompany">Компания:</label>
+    <input type="text" id="filmCompany" name="company" required th:value="${film.getCompany()}"><br>
+    <label for="filmDirector">Режиссёр:</label>
+    <input type="text" id="filmDirector" name="director" required th:value="${film.getDirector()}"><br>
+    <label for="filmReleaseYear">Год выхода:</label>
+    <input type="number" id="filmReleaseYear" name="releaseYear" required th:value="${film.getYear_of_release()}"><br>
+    <label for="filmReleaseYear">Описание:</label>
+    <input type="number" id="filmDescription" name="description" required th:value="${film.getDescription()}"><br>
+    <input type="submit" id="submitButton" value="Сохранить" class="btn">
+</form>
+</body>
+</html>
